@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: laravel_app
+        ports:
+            - "8000:80"
+        volumes:
+            - .:/var/www/html
+            - /var/www/html/vendor
+            - /var/www/html/node_modules
+        depends_on:
+            - db
+
+    db:
+        image: postgres:15
+        container_name: laravel_db
+        restart: always
+        environment:
+            POSTGRES_DB: starter-project
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: guga
+        ports:
+            - "5432:5432"
+        volumes:
+            - db_data:/var/lib/postgresql/data
+
+volumes:
+    db_data:
