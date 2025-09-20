@@ -5,6 +5,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Hello Rapaziada.</h1>
+    <h1 class="text-5xl">Hello Rapaziada.</h1>
 </body>
 </html>

@@ -1,45 +1,84 @@
-<form action="{{ $action }}" method="POST" class="bg-white p-6 rounded-lg shadow-md space-y-4">
-    @csrf
-    @if($method === 'PUT')
-        @method('PUT')
-    @endif
+<div class="max-w-2xl mx-auto">
+    <form action="{{ $action }}" method="POST" class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+        @csrf
+        @if($method === 'PUT')
+            @method('PUT')
+        @endif
 
-    <div>
-        <label for="title" class="block text-sm font-medium text-gray-700">Título</label>
-        <input type="text" name="title" id="title"
-               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-               value="{{ old('title', $task->title ?? '') }}" required>
-    </div>
+        <!-- Form Header -->
+        <div class="bg-gradient-to-r from-indigo-500 to-purple-600 px-6 py-4">
+            <h2 class="text-xl font-semibold text-white">
+                {{ $task->exists ? 'Editar Task' : 'Nova Task' }}
+            </h2>
+        </div>
 
-    <div>
-        <label for="description" class="block text-sm font-medium text-gray-700">Descrição</label>
-        <textarea name="description" id="description" rows="3"
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">{{ old('description', $task->description) }}</textarea>
-    </div>
+        <!-- Form Content -->
+        <div class="p-6 space-y-6">
+            <!-- Title Field -->
+            <div class="space-y-2">
+                <label for="title" class="flex items-center gap-2 text-sm font-medium text-gray-700">
+                    <i class="bi bi-card-text text-gray-400"></i>
+                    Título
+                </label>
+                <input type="text" name="title" id="title"
+                       class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                       placeholder="Digite o título da tarefa..."
+                       value="{{ old('title', $task->title ?? '') }}" required>
+                @error('title')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
 
-    <div class="flex items-center">
-        <input type="hidden" name="is_completed" value="0">
-        <input type="checkbox" name="is_completed" id="is_completed" value="1"
-               class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-            {{ old('is_completed', $task->is_completed ?? false) ? 'checked' : '' }}>
-        <label for="is_completed" class="ml-2 block text-sm text-gray-700">Concluída</label>
-    </div>
+            <!-- Description Field -->
+            <div class="space-y-2">
+                <label for="description" class="flex items-center gap-2 text-sm font-medium text-gray-700">
+                    <i class="bi bi-card-text text-gray-400"></i>
+                    Descrição
+                </label>
+                <textarea name="description" id="description" rows="4"
+                          class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors resize-none"
+                          placeholder="Descreve a tua tarefa...">{{ old('description', $task->description ?? '') }}</textarea>
+                @error('description')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
 
-    <div>
-        <label for="due_date" class="block text-sm font-medium text-gray-700">Data Limite</label>
-        <input type="date" name="due_date" id="due_date"
-               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-               value="{{ old('due_date', $task->due_date ?? '') }}">
-    </div>
+            <!-- Due Date Field -->
+            <div class="space-y-2">
+                <label for="due_date" class="flex items-center gap-2 text-sm font-medium text-gray-700">
+                    <i class="bi bi-calendar-event text-gray-400"></i>
+                    Data Limite
+                </label>
+                <input type="date" name="due_date" id="due_date"
+                       class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                       value="{{ old('due_date', $task->due_date ?? '') }}">
+                @error('due_date')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
 
-    <div class="flex space-x-3">
-        <button type="submit"
-                class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition">
-            {{ $buttonText }}
-        </button>
-        <a href="{{ route('tasks.index') }}"
-           class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition">
-            Voltar
-        </a>
-    </div>
-</form>
+            <!-- Completed Checkbox -->
+            <div class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+                <input type="hidden" name="is_completed" value="0">
+                <input type="checkbox" name="is_completed" id="is_completed" value="1"
+                       class="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 focus:ring-2"
+                    {{ old('is_completed', $task->is_completed ?? false) ? 'checked' : '' }}>
+                <label for="is_completed" class="flex items-center gap-2 text-sm font-medium text-gray-700 cursor-pointer">
+                    Marcar como concluída
+                </label>
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex gap-3">
+            <button type="submit"
+                    class="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 font-medium">
+                {{ $buttonText }}
+            </button>
+            <a href="{{ route('tasks.index') }}"
+               class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200 font-medium">
+                Cancelar
+            </a>
+        </div>
+    </form>
+</div>
