@@ -15,10 +15,16 @@ class Task extends Model
         'is_completed',
         'due_date',
         'category_id',
+        'user_id',
     ];
 
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

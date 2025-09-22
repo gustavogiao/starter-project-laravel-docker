@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout>
     <div class="container py-5">
         @include('tasks._form', [
             'action' => route('tasks.update', $task->id),
@@ -9,4 +7,4 @@
             'task' => $task
         ])
     </div>
-@endsection
+</x-app-layout>

@@ -8,12 +8,23 @@ use App\Models\Task;
 
 class TaskController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->authorizeResource(Task::class, 'task');
+    }
+
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $tasks = Task::with('category')->get();
+        $tasks = Task::with('category')
+            ->where('user_id', auth()->id())
+            ->orderBy('due_date')
+            ->get();
         return view('index', compact('tasks'));
     }
 
@@ -31,7 +42,10 @@ class TaskController extends Controller
      */
     public function store(TaskRequest $request)
     {
-        Task::create($request->validated());
+        $data = $request->validated();
+        $data['user_id'] = auth()->id();
+
+        Task::create($data);
 
         return redirect()->route('tasks.index')
             ->with('success', 'Task criada com sucesso!');
@@ -59,11 +73,15 @@ class TaskController extends Controller
      */
     public function update(TaskRequest $request, Task $task)
     {
-        $task->update($request->validated());
+        $data = $request->validated();
+        $data['user_id'] = $task->user_id;
+
+        $task->update($data);
 
         return redirect()->route('tasks.index')
             ->with('success', 'Task atualizada com sucesso!');
     }
+
 
     /**
      * Remove the specified resource from storage.

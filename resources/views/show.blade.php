@@ -1,8 +1,9 @@
-@extends('layouts.app')
-
-@section('title', 'Detalhes da Task')
-
-@section('content')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Detalhes da Task') }}
+        </h2>
+    </x-slot>
     <div class="max-w-3xl mx-auto px-4 py-8">
         <!-- Header with Back Button -->
         <div class="flex items-center gap-4 mb-8">
@@ -66,4 +67,4 @@
             </div>
         </div>
     </div>
-@endsection
+</x-app-layout>

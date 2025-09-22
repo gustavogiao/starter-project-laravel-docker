@@ -1,8 +1,9 @@
-@extends('layouts.app')
-
-@section('title', 'Lista de Tasks')
-
-@section('content')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-black leading-tight">
+            {{ __('Lista de Tasks') }}
+        </h2>
+    </x-slot>
     <div class="min-h-screen">
         <div class="max-w-6xl mx-auto px-4 py-8">
             <!-- Header Section -->
@@ -28,7 +29,7 @@
                     <div class="bg-white/60 backdrop-blur-sm border border-white/20 rounded-2xl p-6 shadow-lg">
                         <div class="flex items-center gap-3">
                             <div class="p-3 bg-blue-100 rounded-xl">
-                                <i class="bi bi-list-task text-blue-600 text-xl"></i>
+                                <i class="bi bi-list-task text-blue-600 text-2xl"></i>
                             </div>
                             <div>
                                 <p class="text-2xl font-bold text-gray-900">{{ $tasks->count() }}</p>
@@ -39,7 +40,7 @@
                     <div class="bg-white/60 backdrop-blur-sm border border-white/20 rounded-2xl p-6 shadow-lg">
                         <div class="flex items-center gap-3">
                             <div class="p-3 bg-green-100 rounded-xl">
-                                <i class="bi bi-check-circle text-green-600 text-xl"></i>
+                                <i class="bi bi-check-circle text-green-600 text-2xl"></i>
                             </div>
                             <div>
                                 <p class="text-2xl font-bold text-gray-900">{{ $tasks->where('is_completed', true)->count() }}</p>
@@ -50,7 +51,7 @@
                     <div class="bg-white/60 backdrop-blur-sm border border-white/20 rounded-2xl p-6 shadow-lg">
                         <div class="flex items-center gap-3">
                             <div class="p-3 bg-orange-100 rounded-xl">
-                                <i class="bi bi-hourglass-split text-orange-600 text-xl"></i>
+                                <i class="bi bi-hourglass-split text-orange-600 text-2xl"></i>
                             </div>
                             <div>
                                 <p class="text-2xl font-bold text-gray-900">{{ $tasks->where('is_completed', false)->count() }}</p>
@@ -135,4 +136,4 @@
             @endif
         </div>
     </div>
-@endsection
+</x-app-layout>

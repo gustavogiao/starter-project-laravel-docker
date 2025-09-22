@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout>
     <div class="container py-5">
         @include('tasks._form', [
             'action' => route('tasks.store'),
@@ -9,4 +7,4 @@
             'task' => new \App\Models\Task()
         ])
     </div>
-@endsection
+</x-app-layout>
