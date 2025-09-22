@@ -51,6 +51,12 @@
                         </p>
                     </div>
 
+                    <!-- Category -->
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-700 mb-2">Categoria</h3>
+                        <p class="text-gray-900">{{ $task->category->name ?: 'Nenhuma categoria atribuída' }}</p>
+                    </div>
+
                     <!-- Created Date -->
                     <div>
                         <h3 class="text-sm font-medium text-gray-700 mb-2">Criada em</h3>

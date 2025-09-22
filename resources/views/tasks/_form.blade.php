@@ -57,6 +57,26 @@
                 @enderror
             </div>
 
+            <div class="space-y-2">
+                <label for="category_id" class="flex items-center gap-2 text-sm font-medium text-gray-700">
+                    <i class="bi bi-tags text-gray-400"></i>
+                    Categoria
+                </label>
+                <select name="category_id" id="category_id"
+                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors">
+                    <option value="">Selecione uma categoria</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}"
+                            {{ old('category_id', $task->category_id ?? '') == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('category_id')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
+
             <!-- Completed Checkbox -->
             <div class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
                 <input type="hidden" name="is_completed" value="0">
